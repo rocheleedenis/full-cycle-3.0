@@ -2,12 +2,20 @@ version: "3"
 
 services:
   laravel:
+    # o build cria a imagem de acordo com o dockerfile
+    # daí não presisa baixar uma imagem pronta do projeto
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile.prod
     image: rocheleedenis/laravel:prod
     container_name: laravel
     networks:
       - laranet
 
   nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
     image: rocheleedenis/nginx:prod
     container_name: nginx
     networks:
