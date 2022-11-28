@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  node:
+    build:
+      # aqui não precisa de especificar o dockerfile porque ele pega o padrão
+      context: node
+    container_name: node
+    networks:
+      - node-network
+    volumes:
+      - ./node:/usr/src/app
+    tty: true
+    ports:
+      - "3000:3000"
+
   mysql:
     image: mysql:5.7
     # no caso do mysql este comando é necessário rodar após o container ser iniciado
