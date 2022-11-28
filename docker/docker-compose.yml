@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7
+    # no caso do mysql este comando é necessário rodar após o container ser iniciado
+    # após rodar o entrypoind
+    command: --innodb-use-native-aio=0
+    container_name: mysql
+    # se por algum motivo o container cair ele cai reistartar o container automaticamente
+    restart: always
+    # habilita a forma de interação para caso a gente precise entrar no container
+    # para rodar algum comando manualmente
+    tty: true
+    # tudo que o mysql gerar ficará armazenado neste volume, então os dados nunca se perderão
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - node-network
+
+networks:
+  node-network:
+    driver: bridge
