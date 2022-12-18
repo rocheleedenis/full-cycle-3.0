@@ -13,6 +13,9 @@ services:
     tty: true
     ports:
       - "3000:3000"
+    entrypoint: wait-for mysql:3306 -t 40 -- docker-entrypoint.sh
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.7
