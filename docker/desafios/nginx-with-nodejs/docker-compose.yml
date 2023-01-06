@@ -1,10 +1,3 @@
-# A idéia principal é que quando um usuário acesse o nginx, o mesmo fará uma chamada em nossa aplicação node.js. Essa aplicação por sua vez adicionará um registro em nosso banco de dados mysql, cadastrando um nome na tabela people.
-# O retorno da aplicação node.js para o nginx deverá ser:
-# <h1>Full Cycle Rocks!</h1>
-# - Lista de nomes cadastrada no banco de dados.
-# Gere o docker-compose de uma forma que basta apenas rodarmos: docker-compose up -d que tudo deverá estar funcionando e disponível na porta: 8080.
-# Suba tudo em um repositório e faça a entrega.
-
 version: "3"
 
 services:
@@ -16,7 +9,7 @@ services:
       - desafio
     volumes:
     # remover depois
-      - ./app:/usr/src/app
+      - ./app:/app
     tty: true
     depends_on:
       - mysql
@@ -31,6 +24,20 @@ services:
       - "8080:80"
     depends_on:
       - app
+
+  mysql:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: mysql
+    restart: always
+    # habilita a forma de interação para caso a gente precise entrar no container
+    # para rodar algum comando manualmente
+    tty: true
+    environment:
+      - MYSQL_DATABASE=desafio
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - desafio
 
 networks:
   desafio:
