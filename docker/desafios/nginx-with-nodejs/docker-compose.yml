@@ -7,10 +7,7 @@ services:
     container_name: app
     networks:
       - desafio
-    volumes:
-    # remover depois
-      - ./app:/app
-    tty: true
+    entrypoint: wait-for mysql:3306 -t 20 -- node index.js
     depends_on:
       - mysql
 
@@ -30,9 +27,8 @@ services:
     command: --innodb-use-native-aio=0
     container_name: mysql
     restart: always
-    # habilita a forma de interação para caso a gente precise entrar no container
-    # para rodar algum comando manualmente
-    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=desafio
       - MYSQL_ROOT_PASSWORD=root
