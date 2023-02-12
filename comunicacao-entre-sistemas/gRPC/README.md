@@ -18,7 +18,7 @@ Baiando as dependências
 go mod tidy
 ```
 
-Gerando os arquivos da entidade category para falar com o gRPC e o arquivo com as interfaces que fazem a conversão para Protocol Buffers.
+Gerando os arquivos da entidade category para falar com o gRPC e o arquivo com as interfaces que fazem a comunicação com Protocol Buffers. Os arquivos gerados estarão na pasta internal/pb. Esses arquivos não devem ser alterados.
 
 ```bash
 protoc --go_out=. --go-grpc_out=. proto/course_category.proto
