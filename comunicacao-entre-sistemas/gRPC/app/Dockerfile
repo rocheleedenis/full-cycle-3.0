@@ -1,4 +1,4 @@
-FROM golang
+FROM golang:1.20
 
 WORKDIR /app
 
@@ -10,3 +10,5 @@ RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28 && \
 RUN go install github.com/ktr0731/evans@latest
 
 RUN apt-get install -y sqlite3 libsqlite3-dev
+
+CMD [ "go", "run", "cmd/grpcServer/main.go" ]

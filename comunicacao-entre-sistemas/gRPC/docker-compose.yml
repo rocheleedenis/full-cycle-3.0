@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: app
+    container_name: grpc_go
+    volumes:
+      - ./app:/app
