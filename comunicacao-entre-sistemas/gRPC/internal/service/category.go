@@ -17,7 +17,7 @@ func NewCategoryService(categoryDB database.Category) *CategoryService {
 	}
 }
 
-func (c *CategoryService) CreateCategory(ctx context.Context, input *pb.CreateCategoryRequest) (*pb.CategoryResponse, error) {
+func (c *CategoryService) CreateCategory(ctx context.Context, input *pb.CreateCategoryRequest) (*pb.Category, error) {
 	// return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 	category, err := c.CategoryDB.Create(input.Name, input.Description)
 
@@ -31,7 +31,5 @@ func (c *CategoryService) CreateCategory(ctx context.Context, input *pb.CreateCa
 		Description: category.Description,
 	}
 
-	return &pb.CategoryResponse{
-		Category: categoryResponse,
-	}, nil
+	return categoryResponse, nil
 }
