@@ -3,23 +3,30 @@
 Excute a imagem:
 
 ```bash
-docker run -it --mount type=bind,source="$(pwd)"/,target=/app grpc_image bash
+docker build -t grpc_image . --no-cache
 ```
 
-Iniciando o projeto
-
 ```bash
-go mod init github/rocheleedenis/full-cycle-3.0
+docker run -it --rm --name grpc_container --mount type=bind,source="$(pwd)"/,target=/app grpc_image bash
 ```
 
-Baiando as dependências
+Inicie o serviço Go
 
 ```bash
-go mod tidy
+go run cmd/grpcServer/main.go
 ```
 
-Gerando os arquivos da entidade category para falar com o gRPC e o arquivo com as interfaces que fazem a comunicação com Protocol Buffers. Os arquivos gerados estarão na pasta internal/pb. Esses arquivos não devem ser alterados.
+Crie o banco de dados. Para isso abra um novo terminal para o container:
 
 ```bash
-protoc --go_out=. --go-grpc_out=. proto/course_category.proto
+docker exec -it grpc_container bash
+
+sqlite3 db.sqlite
+create table categories (id string, name string, description string);
+```
+
+Inicie o Evans.
+
+```bash
+evans -r repl
 ```
